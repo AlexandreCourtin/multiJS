@@ -47,6 +47,7 @@ setInterval(function() {
 
 var canvas = document.getElementById('canvas');
 var textOnlinePlayers = document.getElementById("text_online_players");
+var textPlayersScore = document.getElementById("text_players_score");
 canvas.width = 800;
 canvas.height = 600;
 var context = canvas.getContext('2d');
@@ -54,6 +55,7 @@ socket.on('state', function(state) {
 	context.clearRect(0, 0, 800, 600);
 
 	textOnlinePlayers.innerHTML = "Players Online: " + state.nb_players;
+	textPlayersScore.innerHTML = state.scores;
 	for (var id in state.players) {
 		var player = state.players[id];
 		switch (player.color) {
@@ -65,6 +67,18 @@ socket.on('state', function(state) {
 				break;
 			case 2:
 				context.fillStyle = 'blue';
+				break;
+			case 3:
+				context.fillStyle = 'cyan';
+				break;
+			case 4:
+				context.fillStyle = 'pink';
+				break;
+			case 5:
+				context.fillStyle = 'purple';
+				break;
+			case 6:
+				context.fillStyle = 'brown';
 				break;
 		}
 		context.beginPath();

@@ -23,20 +23,25 @@ server.listen(PORT, () => console.log('Server started on port ' + PORT));
 var state = {
 	players: {},
 	nb_players: 0,
+	id_players: 0,
 	item: {
 		x: Math.floor(Math.random() * 400) + 200,
 		y: Math.floor(Math.random() * 400) + 100,
-	}
+	},
+	scores: ""
 };
 
 io.on('connection', function(socket) {
 	socket.on('new player', function() {
 		console.log('client connected');
 		state.nb_players++;
+		state.id_players++;
 		state.players[socket.id] = {
+			nb: state.id_players,
 			x: Math.floor(Math.random() * 400) + 200,
 			y: Math.floor(Math.random() * 400) + 100,
-			color: Math.floor(Math.random() * 3)
+			color: Math.floor(Math.random() * 7),
+			score: 0
 		};
 	});
 	socket.on('movement', function(data) {
@@ -53,8 +58,18 @@ io.on('connection', function(socket) {
 		if (data.down) {
 			player.y += 5;
 		}
+		if (player.x < 0)
+			player.x = 0;
+		else if (player.x > 800)
+			player.x = 800;
+		if (player.y < 0)
+			player.y = 0;
+		else if (player.y > 600)
+			player.y = 600;
+
 		if (player.x >= state.item.x - 20 && player.x <= state.item.x + 20) {
 			if (player.y >= state.item.y - 20 && player.y <= state.item.y + 20) {
+				player.score++;
 				state.item.x = Math.floor(Math.random() * 400) + 200;
 				state.item.y = Math.floor(Math.random() * 400) + 100;
 			}
@@ -68,5 +83,11 @@ io.on('connection', function(socket) {
 });
 
 setInterval(function() {
+	state.scores = "";
+	for (var id in state.players) {
+		var player = state.players[id];
+		if (player)
+			state.scores += "Player " + player.nb + " score: " + player.score + "<br>";
+	}
 	io.sockets.emit('state', state);
 }, 1000 / 60);
