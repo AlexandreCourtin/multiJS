@@ -1,4 +1,5 @@
 var socket = io();
+var nb_players = 0;
 
 var movement = {
 	up: false,
@@ -56,16 +57,17 @@ var context = canvas.getContext('2d');
 socket.on('state', function(state) {
 	context.clearRect(0, 0, 800, 600);
 
-	textOnlinePlayers.innerHTML = "Players Online: " + state.nb_players;
+	textOnlinePlayers.innerHTML = "Players Online: " + nb_players;
 	textPlayersScore.innerHTML = "";
 
+	nb_players = 0;
 	for (var id in state.players) {
 		var player = state.players[id];
 		if (player) {
+			nb_players += 1;
 			if (player.id == personal_id)
-				textPlayersScore.innerHTML += "(you) Player " + player.nb + " score: " + player.score + "<br>";
-			else
-				textPlayersScore.innerHTML += "Player " + player.nb + " score: " + player.score + "<br>";
+				textPlayersScore.innerHTML += "(you) ";
+			textPlayersScore.innerHTML += "Player " + player.nb + " score: " + player.score + "<br>";
 			switch (player.color) {
 				case 0:
 					context.fillStyle = 'red';

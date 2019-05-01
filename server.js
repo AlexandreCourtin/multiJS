@@ -1,15 +1,27 @@
 const express = require('express');
 const http = require('http');
-//const path = require('path');
 const socketIO = require('socket.io');
+const rateLimit = require("express-rate-limit");
+var helmet = require('helmet');
+
 const PORT = process.env.PORT || 3000;
 
 //CREATE EXPRESS APP
 var app = express();
 var server = http.Server(app);
 var io = socketIO(server);
+app.use(helmet());
 app.use(express.static(__dirname + '/'));
-app.set('view engine', 'ejs');
+
+app.enable("trust proxy"); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
+
+const limiter = rateLimit({
+	windowMs: 1 * 60 * 1000, // 1 minutes
+	max: 10 // limit each IP to 10 requests per windowMs
+});
+
+//  apply to all requests
+app.use(limiter);
 
 //ROUTES WILL GO HERE
 app.get('/', function(req, res) {
@@ -19,21 +31,18 @@ app.get('/', function(req, res) {
 server.listen(PORT, () => console.log('Server started on port ' + PORT));
 
 //WEB SOCKETS
-
 var state = {
 	players: {},
-	nb_players: 0,
 	id_players: 0,
 	item: {
 		x: Math.floor(Math.random() * 400) + 200,
-		y: Math.floor(Math.random() * 400) + 100,
+		y: Math.floor(Math.random() * 400) + 100
 	},
 };
 
 io.on('connection', function(socket) {
 	socket.on('new player', function(personal_id) {
-		console.log('client connected');
-		state.nb_players++;
+		console.log('client connected ' + socket.id);
 		state.id_players++;
 		state.players[socket.id] = {
 			id: personal_id,
@@ -76,9 +85,8 @@ io.on('connection', function(socket) {
 		}
 	});
 	socket.on('disconnect', function () {
-		console.log('client disconnected');
-		state.nb_players--;
-		state.players[socket.id] = 0;
+		console.log('client disconnected ' + socket.id);
+		state.players[socket.id] = null;
 	});
 });
 
