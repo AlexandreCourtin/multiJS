@@ -1,0 +1,36 @@
+h1 {
+	color: #ede4d7;
+}
+
+h2 {
+	color: #ede4d7;
+}
+
+p {
+	color: #ede4d7;
+}
+
+form {
+	display:inline;
+}
+
+html, body {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	font-family: sans-serif;
+	background-color: #4a5059;
+	overflow: hidden;
+}
+
+#overlay {
+	width: 100%;
+	margin: auto;
+	padding: 30px;
+	text-align: center;
+}
+
+canvas {
+	border: 5px solid black;
+	text-align: center;
+}
