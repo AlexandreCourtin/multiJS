@@ -13,7 +13,7 @@ app.set('view engine', 'ejs');
 
 //ROUTES WILL GO HERE
 app.get('/', function(req, res) {
-	res.render(__dirname + '/index', {nb_players: nb_players});
+	res.sendFile(__dirname + '/index.html');
 });
 
 server.listen(PORT, () => console.log('Server started on port ' + PORT));
@@ -60,4 +60,5 @@ setInterval(function() {
 
 setInterval(function() {
 	console.log('numbers of players = ' + nb_players);
+	io.sockets.emit('nb_players', nb_players);
 }, 1000);

@@ -46,6 +46,7 @@ setInterval(function() {
 }, 1000 / 60);
 
 var canvas = document.getElementById('canvas');
+var textOnlinePlayers = document.getElementById("text_online_players");
 canvas.width = 800;
 canvas.height = 600;
 var context = canvas.getContext('2d');
@@ -69,4 +70,8 @@ socket.on('state', function(players) {
 		context.arc(player.x, player.y, 10, 0, 2 * Math.PI);
 		context.fill();
 	}
+});
+
+socket.on('nb_players', function(n) {
+	textOnlinePlayers.innerHTML = "Players Online: " + n;
 });
