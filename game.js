@@ -25,6 +25,18 @@ document.addEventListener('keydown', function(event) {
 		case 83: // S
 			movement.down = true;
 			break;
+		case 37: // LEFT
+			movement.left = true;
+			break;
+		case 38: // UP
+			movement.up = true;
+			break;
+		case 39: // RIGHT
+			movement.right = true;
+			break;
+		case 40: // DOWN
+			movement.down = true;
+			break;
 	}
 });
 document.addEventListener('keyup', function(event) {
@@ -39,6 +51,18 @@ document.addEventListener('keyup', function(event) {
 			movement.right = false;
 			break;
 		case 83: // S
+			movement.down = false;
+			break;
+		case 37: // LEFT
+			movement.left = false;
+			break;
+		case 38: // UP
+			movement.up = false;
+			break;
+		case 39: // RIGHT
+			movement.right = false;
+			break;
+		case 40: // DOWN
 			movement.down = false;
 			break;
 	}
