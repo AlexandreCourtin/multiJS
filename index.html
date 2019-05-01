@@ -10,10 +10,28 @@
 </head>
 <body>
 	<div id="overlay">
-		<canvas id="canvas"></canvas>
+		<canvas id="canvas" hidden></canvas>
+		<input id="button_connect" class="button" type="button" value="Join" onChange="buttonThing">
 		<p id="text_online_players"></p>
 		<p id="text_players_score"></p>
 	</div>
 </body>
-<script src="/game.js"></script>
+<script type="text/javascript" src="/game.js"></script>
+<script type="text/javascript">
+
+const button_connect = document.getElementById('button_connect');
+const canvass = document.getElementById('canvas');
+button_connect.addEventListener('click', buttonThing);
+
+function buttonThing() {
+	button_connect.hidden = true;
+	canvass.hidden = false;
+	connected = true;
+	socket.emit('new player', personal_id);
+	setInterval(function() {
+		socket.emit('movement', movement);
+	}, 1000 / 60);
+}
+
+</script>
 </html>

@@ -85,8 +85,10 @@ io.on('connection', function(socket) {
 		}
 	});
 	socket.on('disconnect', function () {
-		console.log('client disconnected ' + socket.id);
-		state.players[socket.id] = null;
+		if (state.players[socket.id]) {
+			console.log('client disconnected ' + socket.id);
+			state.players[socket.id] = null;
+		}
 	});
 });
 
