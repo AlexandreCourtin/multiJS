@@ -7,6 +7,8 @@ var movement = {
 	right: false
 }
 
+var personal_id = Math.random() * 999999;
+
 document.addEventListener('keydown', function(event) {
 	switch (event.keyCode) {
 		case 65: // A
@@ -40,7 +42,7 @@ document.addEventListener('keyup', function(event) {
 	}
 });
 
-socket.emit('new player');
+socket.emit('new player', personal_id);
 setInterval(function() {
 	socket.emit('movement', movement);
 }, 1000 / 60);
@@ -55,35 +57,42 @@ socket.on('state', function(state) {
 	context.clearRect(0, 0, 800, 600);
 
 	textOnlinePlayers.innerHTML = "Players Online: " + state.nb_players;
-	textPlayersScore.innerHTML = state.scores;
+	textPlayersScore.innerHTML = "";
+
 	for (var id in state.players) {
 		var player = state.players[id];
-		switch (player.color) {
-			case 0:
-				context.fillStyle = 'red';
-				break;
-			case 1:
-				context.fillStyle = 'green';
-				break;
-			case 2:
-				context.fillStyle = 'blue';
-				break;
-			case 3:
-				context.fillStyle = 'cyan';
-				break;
-			case 4:
-				context.fillStyle = 'pink';
-				break;
-			case 5:
-				context.fillStyle = 'purple';
-				break;
-			case 6:
-				context.fillStyle = 'brown';
-				break;
+		if (player) {
+			if (player.id == personal_id)
+				textPlayersScore.innerHTML += "(you) Player " + player.nb + " score: " + player.score + "<br>";
+			else
+				textPlayersScore.innerHTML += "Player " + player.nb + " score: " + player.score + "<br>";
+			switch (player.color) {
+				case 0:
+					context.fillStyle = 'red';
+					break;
+				case 1:
+					context.fillStyle = 'green';
+					break;
+				case 2:
+					context.fillStyle = 'blue';
+					break;
+				case 3:
+					context.fillStyle = 'cyan';
+					break;
+				case 4:
+					context.fillStyle = 'pink';
+					break;
+				case 5:
+					context.fillStyle = 'purple';
+					break;
+				case 6:
+					context.fillStyle = 'brown';
+					break;
+			}
+			context.beginPath();
+			context.arc(player.x, player.y, 10, 0, 2 * Math.PI);
+			context.fill();
 		}
-		context.beginPath();
-		context.arc(player.x, player.y, 10, 0, 2 * Math.PI);
-		context.fill();
 	}
 	context.fillStyle = 'yellow';
 	context.beginPath();

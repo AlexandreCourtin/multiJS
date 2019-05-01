@@ -28,15 +28,15 @@ var state = {
 		x: Math.floor(Math.random() * 400) + 200,
 		y: Math.floor(Math.random() * 400) + 100,
 	},
-	scores: ""
 };
 
 io.on('connection', function(socket) {
-	socket.on('new player', function() {
+	socket.on('new player', function(personal_id) {
 		console.log('client connected');
 		state.nb_players++;
 		state.id_players++;
 		state.players[socket.id] = {
+			id: personal_id,
 			nb: state.id_players,
 			x: Math.floor(Math.random() * 400) + 200,
 			y: Math.floor(Math.random() * 400) + 100,
@@ -83,11 +83,5 @@ io.on('connection', function(socket) {
 });
 
 setInterval(function() {
-	state.scores = "";
-	for (var id in state.players) {
-		var player = state.players[id];
-		if (player)
-			state.scores += "Player " + player.nb + " score: " + player.score + "<br>";
-	}
 	io.sockets.emit('state', state);
 }, 1000 / 60);
