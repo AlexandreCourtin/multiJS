@@ -50,11 +50,12 @@ var textOnlinePlayers = document.getElementById("text_online_players");
 canvas.width = 800;
 canvas.height = 600;
 var context = canvas.getContext('2d');
-socket.on('state', function(players) {
+socket.on('state', function(state) {
 	context.clearRect(0, 0, 800, 600);
 
-	for (var id in players) {
-		var player = players[id];
+	textOnlinePlayers.innerHTML = "Players Online: " + state.nb_players;
+	for (var id in state.players) {
+		var player = state.players[id];
 		switch (player.color) {
 			case 0:
 				context.fillStyle = 'red';
@@ -70,8 +71,8 @@ socket.on('state', function(players) {
 		context.arc(player.x, player.y, 10, 0, 2 * Math.PI);
 		context.fill();
 	}
-});
-
-socket.on('nb_players', function(n) {
-	textOnlinePlayers.innerHTML = "Players Online: " + n;
+	context.fillStyle = 'yellow';
+	context.beginPath();
+	context.arc(state.item.x, state.item.y, 5, 0, 2 * Math.PI);
+	context.fill();
 });

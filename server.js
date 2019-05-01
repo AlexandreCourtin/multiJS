@@ -20,20 +20,27 @@ server.listen(PORT, () => console.log('Server started on port ' + PORT));
 
 //WEB SOCKETS
 
-var players = {};
-var nb_players = 0;
+var state = {
+	players: {},
+	nb_players: 0,
+	item: {
+		x: Math.floor(Math.random() * 400) + 200,
+		y: Math.floor(Math.random() * 400) + 100,
+	}
+};
+
 io.on('connection', function(socket) {
 	socket.on('new player', function() {
 		console.log('client connected');
-		nb_players++;
-		players[socket.id] = {
-			x: 300,
-			y: 300,
+		state.nb_players++;
+		state.players[socket.id] = {
+			x: Math.floor(Math.random() * 400) + 200,
+			y: Math.floor(Math.random() * 400) + 100,
 			color: Math.floor(Math.random() * 3)
 		};
 	});
 	socket.on('movement', function(data) {
-		var player = players[socket.id] || {};
+		var player = state.players[socket.id] || {};
 		if (data.left) {
 			player.x -= 5;
 		}
@@ -46,19 +53,20 @@ io.on('connection', function(socket) {
 		if (data.down) {
 			player.y += 5;
 		}
+		if (player.x >= state.item.x - 20 && player.x <= state.item.x + 20) {
+			if (player.y >= state.item.y - 20 && player.y <= state.item.y + 20) {
+				state.item.x = Math.floor(Math.random() * 400) + 200;
+				state.item.y = Math.floor(Math.random() * 400) + 100;
+			}
+		}
 	});
 	socket.on('disconnect', function () {
 		console.log('client disconnected');
-		nb_players--;
-		players[socket.id] = 0;
+		state.nb_players--;
+		state.players[socket.id] = 0;
 	});
 });
 
 setInterval(function() {
-	io.sockets.emit('state', players);
+	io.sockets.emit('state', state);
 }, 1000 / 60);
-
-setInterval(function() {
-	console.log('numbers of players = ' + nb_players);
-	io.sockets.emit('nb_players', nb_players);
-}, 1000);
