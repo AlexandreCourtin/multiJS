@@ -41,7 +41,7 @@ var state = {
 };
 
 io.on('connection', function(socket) {
-	socket.on('new player', function(personal_id) {
+	socket.on('new player', function(personal_id, color) {
 		console.log('client connected ' + socket.id);
 		state.id_players++;
 		state.players[socket.id] = {
@@ -49,7 +49,7 @@ io.on('connection', function(socket) {
 			nb: state.id_players,
 			x: Math.floor(Math.random() * 400) + 200,
 			y: Math.floor(Math.random() * 400) + 100,
-			color: Math.floor(Math.random() * 7),
+			color: color,
 			score: 0
 		};
 	});

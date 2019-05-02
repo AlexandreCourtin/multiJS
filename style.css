@@ -41,3 +41,39 @@ canvas {
 	border-radius: 10px;
 	font-size: 25px;
 }
+
+.buttonRed {
+	background: red;
+	padding: 30px;
+	border-radius: 20px;
+}
+.buttonBlue {
+	background: blue;
+	padding: 30px;
+	border-radius: 20px;
+}
+.buttonGreen {
+	background: green;
+	padding: 30px;
+	border-radius: 20px;
+}
+.buttonPurple {
+	background: purple;
+	padding: 30px;
+	border-radius: 20px;
+}
+.buttonPink {
+	background: #f935fc;
+	padding: 30px;
+	border-radius: 20px;
+}
+.buttonOrange {
+	background: orange;
+	padding: 30px;
+	border-radius: 20px;
+}
+.buttonCyan {
+	background: cyan;
+	padding: 30px;
+	border-radius: 20px;
+}

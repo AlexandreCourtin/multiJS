@@ -11,7 +11,15 @@
 <body>
 	<div id="overlay">
 		<canvas id="canvas" hidden></canvas>
-		<input id="button_connect" class="button" type="button" value="Join" onChange="buttonThing">
+		<input id="button_red" class="buttonRed" type="button">
+		<input id="button_blue" class="buttonBlue" type="button">
+		<input id="button_green" class="buttonGreen" type="button">
+		<input id="button_purple" class="buttonPurple" type="button">
+		<input id="button_pink" class="buttonPink" type="button">
+		<input id="button_orange" class="buttonOrange" type="button">
+		<input id="button_cyan" class="buttonCyan" type="button">
+		<h1 id="colortext">Your color: Red</h1>
+		<input id="button_connect" class="button" type="button" value="Join">
 		<p id="text_online_players"></p>
 		<p id="text_players_score"></p>
 	</div>
@@ -20,17 +28,64 @@
 <script type="text/javascript">
 
 const button_connect = document.getElementById('button_connect');
+const button_red = document.getElementById('button_red');
+const color_text = document.getElementById('colortext');
 const canvass = document.getElementById('canvas');
+var color = 0;
+
 button_connect.addEventListener('click', buttonThing);
+button_red.addEventListener('click', buttonRed);
+button_blue.addEventListener('click', buttonBlue);
+button_green.addEventListener('click', buttonGreen);
+button_purple.addEventListener('click', buttonPurple);
+button_pink.addEventListener('click', buttonPink);
+button_orange.addEventListener('click', buttonOrange);
+button_cyan.addEventListener('click', buttonCyan);
 
 function buttonThing() {
+	color_text.hidden = true;
 	button_connect.hidden = true;
+	button_red.hidden = true;
+	button_blue.hidden = true;
+	button_green.hidden = true;
+	button_purple.hidden = true;
+	button_pink.hidden = true;
+	button_orange.hidden = true;
+	button_cyan.hidden = true;
 	canvass.hidden = false;
 	connected = true;
-	socket.emit('new player', personal_id);
+	socket.emit('new player', personal_id, color);
 	setInterval(function() {
 		socket.emit('movement', movement);
 	}, 1000 / 60);
+}
+function buttonRed() {
+	color = 0;
+	color_text.innerHTML = "Your color: Red";
+}
+function buttonBlue() {
+	color = 1;
+	color_text.innerHTML = "Your color: Blue";
+}
+function buttonGreen() {
+	color = 2;
+	color_text.innerHTML = "Your color: Green";
+}
+function buttonPurple() {
+	color = 3;
+	color_text.innerHTML = "Your color: Purple";
+}
+function buttonPink() {
+	color = 4;
+	color_text.innerHTML = "Your color: Pink";
+}
+function buttonOrange() {
+	color = 5;
+	color_text.innerHTML = "Your color: Orange";
+}
+function buttonCyan() {
+	color = 6;
+	color_text.innerHTML = "Your color: Cyan";
 }
 
 </script>

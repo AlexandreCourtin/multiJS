@@ -94,22 +94,22 @@ socket.on('state', function(state) {
 						context.fillStyle = 'red';
 						break;
 					case 1:
-						context.fillStyle = 'green';
-						break;
-					case 2:
 						context.fillStyle = 'blue';
 						break;
+					case 2:
+						context.fillStyle = 'green';
+						break;
 					case 3:
-						context.fillStyle = 'cyan';
+						context.fillStyle = 'purple';
 						break;
 					case 4:
 						context.fillStyle = 'pink';
 						break;
 					case 5:
-						context.fillStyle = 'purple';
+						context.fillStyle = 'orange';
 						break;
 					case 6:
-						context.fillStyle = 'brown';
+						context.fillStyle = 'cyan';
 						break;
 				}
 				context.beginPath();
