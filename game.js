@@ -73,11 +73,11 @@ var textOnlinePlayers = document.getElementById("text_online_players");
 var textPlayersScore = document.getElementById("text_players_score");
 canvas.width = 800;
 canvas.height = 600;
-var context = canvas.getContext('2d');
+var ctx = canvas.getContext('2d');
 
 socket.on('state', function(state) {
 	if (connected) {
-		context.clearRect(0, 0, 800, 600);
+		ctx.clearRect(0, 0, 800, 600);
 		textOnlinePlayers.innerHTML = "Players Online: " + nb_players;
 		textPlayersScore.innerHTML = "";
 
@@ -91,35 +91,35 @@ socket.on('state', function(state) {
 				textPlayersScore.innerHTML += "Player " + player.nb + " score: " + player.score + "<br>";
 				switch (player.color) {
 					case 0:
-						context.fillStyle = 'red';
+						ctx.fillStyle = 'red';
 						break;
 					case 1:
-						context.fillStyle = 'blue';
+						ctx.fillStyle = 'blue';
 						break;
 					case 2:
-						context.fillStyle = 'green';
+						ctx.fillStyle = 'green';
 						break;
 					case 3:
-						context.fillStyle = 'purple';
+						ctx.fillStyle = 'purple';
 						break;
 					case 4:
-						context.fillStyle = 'pink';
+						ctx.fillStyle = '#f935fc';
 						break;
 					case 5:
-						context.fillStyle = 'orange';
+						ctx.fillStyle = 'orange';
 						break;
 					case 6:
-						context.fillStyle = 'cyan';
+						ctx.fillStyle = 'cyan';
 						break;
 				}
-				context.beginPath();
-				context.arc(player.x, player.y, 10, 0, 2 * Math.PI);
-				context.fill();
+				ctx.beginPath();
+				ctx.arc(player.x, player.y, 10, 0, 2 * Math.PI);
+				ctx.fill();
 			}
 		}
-		context.fillStyle = 'yellow';
-		context.beginPath();
-		context.arc(state.item.x, state.item.y, 5, 0, 2 * Math.PI);
-		context.fill();
+		ctx.fillStyle = 'yellow';
+		ctx.beginPath();
+		ctx.arc(state.item.x, state.item.y, 5, 0, 2 * Math.PI);
+		ctx.fill();
 	}
 });

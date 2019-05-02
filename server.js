@@ -67,6 +67,7 @@ io.on('connection', function(socket) {
 		if (data.down) {
 			player.y += 5;
 		}
+		//BORD
 		if (player.x < 0)
 			player.x = 0;
 		else if (player.x > 800)
