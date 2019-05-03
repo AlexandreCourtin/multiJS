@@ -91,6 +91,18 @@ io.on('connection', function(socket) {
 				state.item.y = Math.floor(Math.random() * 400) + 100;
 			}
 		}
+		for (var id in state.enemies) {
+			var enemy = state.enemies[id];
+			if (enemy) {
+				if (player.x >= enemy.x - 20 && player.x <= enemy.x + 20) {
+					if (player.y >= enemy.y - 20 && player.y <= enemy.y + 20) {
+						player.score--;
+						//enemy.x = Math.floor(Math.random() * 400) + 200;
+						//enemy.y = Math.floor(Math.random() * 400) + 100;
+					}
+				}
+			}
+		}
 	});
 	socket.on('disconnect', function () {
 		if (state.players[socket.id]) {
