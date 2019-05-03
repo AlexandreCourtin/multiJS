@@ -53,12 +53,6 @@ io.on('connection', function(socket) {
 			color: color,
 			score: 0
 		};
-		state.enemies[socket.id] = {
-			x: 0,
-			y: Math.floor(Math.random() * 600),
-			directionX: 1,
-			directionY: 1
-		};
 	});
 	socket.on('movement', function(data) {
 		var player = state.players[socket.id] || {};
@@ -97,8 +91,8 @@ io.on('connection', function(socket) {
 				if (player.x >= enemy.x - 20 && player.x <= enemy.x + 20) {
 					if (player.y >= enemy.y - 20 && player.y <= enemy.y + 20) {
 						player.score--;
-						//enemy.x = Math.floor(Math.random() * 400) + 200;
-						//enemy.y = Math.floor(Math.random() * 400) + 100;
+						enemy.x = 0;
+						enemy.y = Math.floor(Math.random() * 600);
 					}
 				}
 			}
@@ -108,17 +102,25 @@ io.on('connection', function(socket) {
 		if (state.players[socket.id]) {
 			console.log('client disconnected ' + socket.id);
 			state.players[socket.id] = null;
-			state.enemies[socket.id] = null;
 		}
 	});
 });
+
+state.enemies[0] = { x: 0, y: Math.floor(Math.random() * 600), directionX: 1, directionY: 1 };
+state.enemies[1] = { x: 0, y: Math.floor(Math.random() * 600), directionX: 1, directionY: -1 };
+state.enemies[2] = { x: 800, y: Math.floor(Math.random() * 600), directionX: -1, directionY: 1 };
+state.enemies[3] = { x: 800, y: Math.floor(Math.random() * 600), directionX: -1, directionY: -1 };
+state.enemies[4] = { x: Math.floor(Math.random() * 800), y: 0, directionX: 1, directionY: 1 };
+state.enemies[5] = { x: Math.floor(Math.random() * 800), y: 0, directionX: -1, directionY: 1 };
+state.enemies[6] = { x: Math.floor(Math.random() * 800), y: 600, directionX: 1, directionY: -1 };
+state.enemies[7] = { x: Math.floor(Math.random() * 800), y: 600, directionX: -1, directionY: -1 };
 
 function move_enemies() {
 	for (var id in state.enemies) {
 		var enemy = state.enemies[id];
 		if (enemy) {
-			enemy.x += enemy.directionX;
-			enemy.y += enemy.directionY;
+			enemy.x += enemy.directionX * 3;
+			enemy.y += enemy.directionY * 3;
 			if (enemy.x > 800)
 				enemy.directionX = -enemy.directionX;
 			else if (enemy.x < 0)
@@ -136,4 +138,4 @@ setInterval(function() {
 }, 1000 / 60);
 setInterval(function() {
 	move_enemies();
-}, 1000 / 60);
+}, 1000 / 30);
