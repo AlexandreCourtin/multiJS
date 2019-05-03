@@ -114,6 +114,15 @@ socket.on('state', function(state) {
 				ctx.fill();
 			}
 		}
+		ctx.fillStyle = 'red';
+		for (var id in state.enemies) {
+			var enemy = state.enemies[id];
+			if (enemy) {
+				ctx.beginPath();
+				ctx.arc(enemy.x, enemy.y, 5, 0, 2 * Math.PI);
+				ctx.fill();
+			}
+		}
 		ctx.fillStyle = 'yellow';
 		ctx.beginPath();
 		ctx.arc(state.item.x, state.item.y, 5, 0, 2 * Math.PI);

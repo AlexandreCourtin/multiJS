@@ -38,6 +38,7 @@ var state = {
 		x: Math.floor(Math.random() * 400) + 200,
 		y: Math.floor(Math.random() * 400) + 100
 	},
+	enemies: {}
 };
 
 io.on('connection', function(socket) {
@@ -51,6 +52,12 @@ io.on('connection', function(socket) {
 			y: Math.floor(Math.random() * 400) + 100,
 			color: color,
 			score: 0
+		};
+		state.enemies[socket.id] = {
+			x: 0,
+			y: Math.floor(Math.random() * 600),
+			directionX: 1,
+			directionY: 1
 		};
 	});
 	socket.on('movement', function(data) {
@@ -89,10 +96,32 @@ io.on('connection', function(socket) {
 		if (state.players[socket.id]) {
 			console.log('client disconnected ' + socket.id);
 			state.players[socket.id] = null;
+			state.enemies[socket.id] = null;
 		}
 	});
 });
 
+function move_enemies() {
+	for (var id in state.enemies) {
+		var enemy = state.enemies[id];
+		if (enemy) {
+			enemy.x += enemy.directionX;
+			enemy.y += enemy.directionY;
+			if (enemy.x > 800)
+				enemy.directionX = -enemy.directionX;
+			else if (enemy.x < 0)
+				enemy.directionX = -enemy.directionX;
+			if (enemy.y > 600)
+				enemy.directionY = -enemy.directionY;
+			else if (enemy.y < 0)
+				enemy.directionY = -enemy.directionY;
+		}
+	}
+}
+
 setInterval(function() {
 	io.sockets.emit('state', state);
+}, 1000 / 60);
+setInterval(function() {
+	move_enemies();
 }, 1000 / 60);
