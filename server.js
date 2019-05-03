@@ -114,6 +114,14 @@ state.enemies[4] = { x: Math.floor(Math.random() * 800), y: 0, directionX: 1, di
 state.enemies[5] = { x: Math.floor(Math.random() * 800), y: 0, directionX: -1, directionY: 1 };
 state.enemies[6] = { x: Math.floor(Math.random() * 800), y: 600, directionX: 1, directionY: -1 };
 state.enemies[7] = { x: Math.floor(Math.random() * 800), y: 600, directionX: -1, directionY: -1 };
+state.enemies[8] = { x: 0, y: Math.floor(Math.random() * 600), directionX: 1, directionY: 1 };
+state.enemies[9] = { x: 0, y: Math.floor(Math.random() * 600), directionX: 1, directionY: -1 };
+state.enemies[10] = { x: 800, y: Math.floor(Math.random() * 600), directionX: -1, directionY: 1 };
+state.enemies[11] = { x: 800, y: Math.floor(Math.random() * 600), directionX: -1, directionY: -1 };
+state.enemies[12] = { x: Math.floor(Math.random() * 800), y: 0, directionX: 1, directionY: 1 };
+state.enemies[13] = { x: Math.floor(Math.random() * 800), y: 0, directionX: -1, directionY: 1 };
+state.enemies[14] = { x: Math.floor(Math.random() * 800), y: 600, directionX: 1, directionY: -1 };
+state.enemies[15] = { x: Math.floor(Math.random() * 800), y: 600, directionX: -1, directionY: -1 };
 
 function move_enemies() {
 	for (var id in state.enemies) {
