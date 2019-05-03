@@ -11,14 +11,13 @@
 <body>
 	<div id="overlay">
 		<canvas id="canvas" hidden></canvas>
-		<input id="button_red" class="buttonRed" type="button">
 		<input id="button_blue" class="buttonBlue" type="button">
 		<input id="button_green" class="buttonGreen" type="button">
 		<input id="button_purple" class="buttonPurple" type="button">
 		<input id="button_pink" class="buttonPink" type="button">
 		<input id="button_orange" class="buttonOrange" type="button">
 		<input id="button_cyan" class="buttonCyan" type="button">
-		<h1 id="colortext">Your color: Red</h1>
+		<h1 id="colortext">Your color: Blue</h1>
 		<input id="button_connect" class="button" type="button" value="Join">
 		<p id="text_online_players"></p>
 		<p id="text_players_score"></p>
@@ -28,13 +27,17 @@
 <script type="text/javascript">
 
 const button_connect = document.getElementById('button_connect');
-const button_red = document.getElementById('button_red');
+const button_blue = document.getElementById('button_blue');
+const button_green = document.getElementById('button_green');
+const button_purple = document.getElementById('button_purple');
+const button_pink = document.getElementById('button_pink');
+const button_orange = document.getElementById('button_orange');
+const button_cyan = document.getElementById('button_cyan');
 const color_text = document.getElementById('colortext');
 const canvass = document.getElementById('canvas');
-var color = 0;
+var color = 1;
 
 button_connect.addEventListener('click', buttonThing);
-button_red.addEventListener('click', buttonRed);
 button_blue.addEventListener('click', buttonBlue);
 button_green.addEventListener('click', buttonGreen);
 button_purple.addEventListener('click', buttonPurple);
@@ -45,7 +48,6 @@ button_cyan.addEventListener('click', buttonCyan);
 function buttonThing() {
 	color_text.hidden = true;
 	button_connect.hidden = true;
-	button_red.hidden = true;
 	button_blue.hidden = true;
 	button_green.hidden = true;
 	button_purple.hidden = true;

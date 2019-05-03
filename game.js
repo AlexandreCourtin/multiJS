@@ -90,9 +90,6 @@ socket.on('state', function(state) {
 					textPlayersScore.innerHTML += "(you) ";
 				textPlayersScore.innerHTML += "Player " + player.nb + " score: " + player.score + "<br>";
 				switch (player.color) {
-					case 0:
-						ctx.fillStyle = 'red';
-						break;
 					case 1:
 						ctx.fillStyle = 'blue';
 						break;
